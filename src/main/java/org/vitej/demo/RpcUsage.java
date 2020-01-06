@@ -1,5 +1,7 @@
 package org.vitej.demo;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.vitej.core.constants.CommonConstants;
 import org.vitej.core.protocol.HttpService;
 import org.vitej.core.protocol.Vitej;
@@ -62,7 +64,7 @@ public class RpcUsage {
                             .setAmount(BigInteger.valueOf(1))
                             .setTokenId(CommonConstants.VITE_TOKEN_ID)
                             .setData("Hello".getBytes()),
-                    true);
+                    false);
             Hash sendBlockHash = ((TransactionParams) request.getParams().get(0)).getHashRaw();
             EmptyResponse response = request.send();
         }
@@ -75,8 +77,8 @@ public class RpcUsage {
                     new TransactionParams()
                             .setBlockType(EBlockType.RECEIVE.getValue())
                             .setSendBlockHash(new Hash("ef5dccd73a6ef6370bc72b56b686362fd095152e2746f21113c2015e243b5056")),
-                    true);
-            Hash sendBlockHash = ((TransactionParams) request.getParams().get(0)).getHashRaw();
+                    false);
+            Hash receiveBlockHash = ((TransactionParams) request.getParams().get(0)).getHashRaw();
             EmptyResponse response = request.send();
         }
 
@@ -94,7 +96,7 @@ public class RpcUsage {
                             .setAmount(new BigInteger("0"))
                             .setTokenId(CommonConstants.VITE_TOKEN_ID)
                             .setData(callContractData),
-                    true
+                    false
             );
             Hash sendBlockHash = ((TransactionParams) request.getParams().get(0)).getHashRaw();
             EmptyResponse response = request.send();
@@ -117,7 +119,7 @@ public class RpcUsage {
                             .setTokenId(CommonConstants.VITE_TOKEN_ID)
                             .setFee(CommonConstants.CREATE_CONTRACT_FEE)
                             .setData(createContractData),
-                    true
+                    false
             );
             Hash sendBlockHash = ((TransactionParams) request.getParams().get(0)).getHashRaw();
             EmptyResponse response = request.send();
@@ -451,6 +453,12 @@ public class RpcUsage {
             Vitej vitej = new Vitej(new HttpService());
             NetSyncDetailResponse response = vitej.netSyncDetail().send();
             NetSyncDetailResponse.Result syncDetail = response.getResult();
+        }
+
+        {
+            Vitej vitej = new Vitej(new HttpService());
+            CommonResponse response = vitej.commonMethod("ledger_getAccountBlocksByAddress", "vite_ab24ef68b84e642c0ddca06beec81c9acb1977bbd7da27a87a",0,10).send();
+            Object result = response.getResult();
         }
     }
 }
