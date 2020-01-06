@@ -15,6 +15,7 @@ public class WalletUsage {
         Wallet wallet = new Wallet();
         // New wallet from mnemonic
         Wallet wallet1 = new Wallet(Arrays.asList("network", "north", "tell", "potato", "predict", "almost", "wonder", "spirit", "wheel", "smile", "disease", "bonus", "round", "flock", "pole", "review", "music", "oven", "clarify", "exclude", "loyal", "episode", "image", "notable"));
+        Wallet wallet2 = new Wallet("network north tell potato predict almost wonder spirit wheel smile disease bonus round flock pole review music oven clarify exclude loyal episode image notable");
         // Get mnemonic
         List<String> mnemonic = wallet.getMnemonic();
         // Derive key pair from wallet
